@@ -16,35 +16,42 @@ class Bookshelf extends Component {
 				</header>
 
 				<div className='bookshelf-books'>
+					
+					{ this.props.books.length <= 0 && (
+						<p>
+							No books on this shelf yet.
+						</p>
+					)}
+
 					<ol className='books-grid'>
 
-						{ this.props.books.map(( book ) => {
+						{ this.props.books.map(( book ) => (
 
-							<li>
+							<li key={ book.id }>
 								<div className='book'>
 									<div className='book-top'>
 										<div className='book-cover'
 											style={{
 												width: 128,
 												height: 193,
-												background: `url(${ book.cover })`
+												background: `url(${ book.imageLinks.thumbnail })`
 											}}></div>
 										<div className='book-shelf-changer'>
 											<select>
 												<option value='none' disabled>Move to...</option>
-												<option value='reading'>Currently Reading</option>
-												<option value='want'>Want to Read</option>
+												<option value='currentlyReading'>Currently Reading</option>
+												<option value='wantToRead'>Want to Read</option>
 												<option value='read'>Read</option>
 												<option value='none'>None</option>
 											</select>
 										</div>
 									</div>
 									<div className='book-title'>{ book.title }</div>
-									<div className='book-authors'>{ book.authors }</div>
+									<div className='book-authors'>{ book.authors.join(', ') }</div>
 								</div>
 							</li>
 
-						})}
+						))}
 
 					</ol>
 				</div>
@@ -56,3 +63,6 @@ class Bookshelf extends Component {
 	}
 
 }
+
+
+export default Bookshelf
