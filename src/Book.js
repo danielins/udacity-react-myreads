@@ -11,7 +11,7 @@ function Book( props ){
 						style={{
 							width: 128,
 							height: 193,
-							background: `url(${ props.book.imageLinks.thumbnail })`
+							background: `url(${ props.book.imageLinks.thumbnail || '' })`
 						}}></div>
 					<div className='book-shelf-changer'>
 						<select>
@@ -24,7 +24,7 @@ function Book( props ){
 					</div>
 				</div>
 				<div className='book-title'>{ props.book.title }</div>
-				<div className='book-authors'>{ props.book.authors.join(', ') }</div>
+				<div className='book-authors'>{ props.book.authors }</div>
 			</div>
 		</li>
 	)

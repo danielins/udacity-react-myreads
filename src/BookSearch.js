@@ -1,15 +1,26 @@
 import React, { Component } from 'react'
 import Book from './Book'
+import * as BooksAPI from './BooksAPI'
 import { Link } from 'react-router-dom'
 
 class BookSearch extends Component {
 
 	state = {
-		query: ''
+		query: '',
+		foundBooks: []
 	}
 
 	updateQuery = (query) => {
-		this.setState({ query: query.trim() })
+
+		const trimmedQuery = query.trim()
+
+		this.setState({ query: trimmedQuery })
+		
+		if ( trimmedQuery )
+			BooksAPI.search( trimmedQuery ).then((books) => {
+				console.log('foundBooks', books.length);
+				this.setState({ foundBooks: books.length ? books : [] })
+			})
 	}
 
 	render() {
@@ -34,7 +45,23 @@ class BookSearch extends Component {
 				</div>
 
 				<div className="search-books-results">
+					
+					{ this.state.foundBooks.length <= 0 && (
+						<p>
+							No books were found.
+						</p>
+					)}
+					
 					<ol className="books-grid">
+
+						{ this.state.foundBooks.map((book) => (
+
+							<Book
+								key={book.id}
+								book={book}
+							/>
+
+						))}
 
 					</ol>
 				</div>
