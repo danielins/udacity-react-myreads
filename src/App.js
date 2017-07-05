@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
+import BookSearch from './BookSearch'
 import Bookshelf from './Bookshelf'
 import './App.css'
 
 class BooksApp extends Component {
 
+  /**
+   * Initial state of books in library
+   */
   state = {
     books: []
   }
@@ -26,17 +30,7 @@ class BooksApp extends Component {
       <div className="app">
 
         <Route path='/search' render={() => (
-          <div className="search-books">
-            <div className="search-books-bar">
-              <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
-              <div className="search-books-input-wrapper">
-                <input type="text" placeholder="Search by title or author"/>
-              </div>
-            </div>
-            <div className="search-books-results">
-              <ol className="books-grid"></ol>
-            </div>
-          </div>
+          <BookSearch />
         )}/>
 
         <Route exact path='/' render={() => (
@@ -70,9 +64,15 @@ class BooksApp extends Component {
 
               </div>
             </div>
+
             <div className="open-search">
-              <a onClick={() => this.setState({ showSearchPage: true })}>Add a book</a>
+              <Link
+                to='/search'
+                title='Add a book to your library'>
+                Add a book
+              </Link>
             </div>
+
           </div>
         )} />
       </div>
