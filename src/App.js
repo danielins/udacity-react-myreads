@@ -11,7 +11,25 @@ class BooksApp extends Component {
    * Initial state of books in library
    */
   state = {
-    books: []
+    books: [],
+    bookshelves: [
+      {
+        'id': 'currentlyReading',
+        'name': 'Currently Reading'
+      },
+      {
+        'id': 'wantToRead',
+        'name': 'Want to Read'
+      },
+      {
+        'id': 'read',
+        'name': 'Read'
+      },
+      {
+        'id': 'none',
+        'name': 'None'
+      }
+    ]
   }
 
   /**
@@ -41,26 +59,17 @@ class BooksApp extends Component {
             <div className="list-books-content">
               <div>
 
-                <Bookshelf
-                  bookshelf='Currently Reading'
-                  books={ this.state.books.filter(
-                    (book) => book.shelf === "currentlyReading"
-                  )}
-                />
+                { this.state.bookshelves.filter((bookshelf) => bookshelf.id !== 'none').map((bookshelf) => (
 
-                <Bookshelf
-                  bookshelf='Want to Read'
-                  books={ this.state.books.filter(
-                    (book) => book.shelf === "wantToRead"
-                  )}
-                />
+                    <Bookshelf
+                      key={ bookshelf.id }
+                      bookshelf={ bookshelf.name }
+                      books={ this.state.books.filter(
+                        (book) => book.shelf === bookshelf.id
+                      )}
+                    />
 
-                <Bookshelf
-                  bookshelf='Read'
-                  books={ this.state.books.filter(
-                    (book) => book.shelf === "read"
-                  )}
-                />
+                ))}
 
               </div>
             </div>
