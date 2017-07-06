@@ -18,7 +18,6 @@ class BookSearch extends Component {
 		
 		if ( trimmedQuery )
 			BooksAPI.search( trimmedQuery ).then((books) => {
-				console.log('foundBooks', books.length);
 				this.setState({ foundBooks: books.length ? books : [] })
 			})
 	}
