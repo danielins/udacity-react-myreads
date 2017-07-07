@@ -58,6 +58,8 @@ class BookSearch extends Component {
 							<Book
 								key={book.id}
 								book={book}
+								moveBook={ this.props.move }
+								shelfList={ this.props.shelfList }
 							/>
 
 						))}

@@ -30,6 +30,8 @@ class Bookshelf extends Component {
 							<Book
 								key={book.id}
 								book={book}
+								moveBook={ this.props.moveBook }
+								shelfList={ this.props.shelfList }
 							/>
 
 						))}

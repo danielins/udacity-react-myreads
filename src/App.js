@@ -43,12 +43,69 @@ class BooksApp extends Component {
 
   }
 
+
+  /**
+   * Function to call an update on a book
+   * Either:
+   * - adding it to the library
+   * - changing its bookshelf
+   * - removing from the library
+   * @param book {Object} - instance of a book
+   * @param shelfId {String} - id of a bookshelf
+   */
+  moveBook = (book, shelfId) => {
+
+    let newLibrary = this.state.books;
+
+    const bookIndex = this.isOnLibrary(book.id);
+
+    // If is going to the put on the library or stay there
+    // Check if book is already on library
+    // If it is, change the shelf of the book
+    if ( bookIndex >= 0 ) {
+
+      // Check is the book is going to be removed from the library
+      if ( shelfId !== 'none' ) {
+
+        newLibrary[bookIndex].shelf = shelfId;
+
+      } else {
+
+        newLibrary.splice(bookIndex, 1);
+
+      }
+
+    // If it's not, push the book onto the library array with new shelf
+    } else {
+
+      book.shelf = shelfId;
+      newLibrary.push(book);
+
+    }
+
+    this.setState({ books: newLibrary });
+
+  }
+
+
+  isOnLibrary = (id) => {
+
+    return this.state.books.findIndex((book) => { 
+      return book.id === id
+    })
+
+  }
+
+
   render() {
     return (
       <div className="app">
 
         <Route path='/search' render={() => (
-          <BookSearch />
+          <BookSearch
+            moveBook={ this.moveBook }
+            shelfList={ this.state.bookshelves }
+          />
         )}/>
 
         <Route exact path='/' render={() => (
@@ -67,6 +124,8 @@ class BooksApp extends Component {
                       books={ this.state.books.filter(
                         (book) => book.shelf === bookshelf.id
                       )}
+                      moveBook={ this.moveBook }
+                      shelfList={ this.state.bookshelves }
                     />
 
                 ))}
