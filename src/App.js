@@ -55,6 +55,8 @@ class BooksApp extends Component {
    */
   moveBook = (book, shelfId) => {
 
+    console.log('moveBook',  book.id, shelfId);
+
     let newLibrary = this.state.books;
 
     const bookIndex = this.isOnLibrary(book.id);
@@ -83,7 +85,11 @@ class BooksApp extends Component {
 
     }
 
+    // update the state
     this.setState({ books: newLibrary });
+
+    // update the API
+    BooksAPI.update(book, shelfId);
 
   }
 

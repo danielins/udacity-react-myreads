@@ -18,6 +18,8 @@ class BookSearch extends Component {
 		
 		if ( trimmedQuery )
 			BooksAPI.search( trimmedQuery ).then((books) => {
+				console.log('====');
+				books.map((book) => console.log(book.id, book.title) )
 				this.setState({ foundBooks: books.length ? books : [] })
 			})
 	}
@@ -58,7 +60,7 @@ class BookSearch extends Component {
 							<Book
 								key={book.id}
 								book={book}
-								moveBook={ this.props.move }
+								moveBook={ this.props.moveBook }
 								shelfList={ this.props.shelfList }
 							/>
 
