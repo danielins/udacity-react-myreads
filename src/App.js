@@ -55,8 +55,6 @@ class BooksApp extends Component {
    */
   moveBook = (book, shelfId) => {
 
-    console.log('moveBook',  book.id, shelfId);
-
     let newLibrary = this.state.books;
 
     const bookIndex = this.isOnLibrary(book.id);

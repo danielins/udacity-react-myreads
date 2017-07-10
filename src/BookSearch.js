@@ -16,12 +16,28 @@ class BookSearch extends Component {
 
 		this.setState({ query: trimmedQuery })
 		
-		if ( trimmedQuery )
+		if ( trimmedQuery ) {
 			BooksAPI.search( trimmedQuery ).then((books) => {
-				console.log('====');
-				books.map((book) => console.log(book.id, book.title) )
 				this.setState({ foundBooks: books.length ? books : [] })
 			})
+		}
+	}
+
+	moveBookSearch = (book, shelfId) => {
+
+		// remove the book from the search results if going to any shelf
+		if ( shelfId !== "none" ) {
+			this.setState((state) => ({
+				foundBooks: state.foundBooks.filter(
+					(b) => b.id !== book.id
+				)
+			}));
+
+			// call the default moveBook function
+			this.props.moveBook(book, shelfId);
+		
+		}
+
 	}
 
 	render() {
@@ -60,8 +76,8 @@ class BookSearch extends Component {
 							<Book
 								key={book.id}
 								book={book}
-								moveBook={ this.props.moveBook }
-								shelfList={ this.props.shelfList }
+								moveBook={ this.moveBookSearch }
+								shelfList={ this.props.shelfList.filter((s) => s.id !== "none") }
 							/>
 
 						))}
