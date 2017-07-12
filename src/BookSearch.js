@@ -27,11 +27,6 @@ class BookSearch extends Component {
 
 		// remove the book from the search results if going to any shelf
 		if ( shelfId !== "none" ) {
-			this.setState((state) => ({
-				foundBooks: state.foundBooks.filter(
-					(b) => b.id !== book.id
-				)
-			}));
 
 			// call the default moveBook function
 			this.props.moveBook(book, shelfId);
@@ -77,7 +72,7 @@ class BookSearch extends Component {
 								key={book.id}
 								book={book}
 								moveBook={ this.moveBookSearch }
-								shelfList={ this.props.shelfList.filter((s) => s.id !== "none") }
+								shelfList={ this.props.shelfList }
 							/>
 
 						))}
