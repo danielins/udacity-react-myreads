@@ -18,6 +18,19 @@ class BookSearch extends Component {
 		
 		if ( trimmedQuery ) {
 			BooksAPI.search( trimmedQuery ).then((books) => {
+
+				//check if the book is already on the library
+				// if it is, update the value of the shelf
+				books.forEach((book) => {
+
+					this.props.books.forEach((libraryBook) => {
+						if ( libraryBook.id === book.id ) {
+							book.shelf = libraryBook.shelf;
+						}
+					});
+
+				});
+
 				this.setState({ foundBooks: books.length ? books : [] })
 			})
 		}
