@@ -23,11 +23,17 @@ class BookSearch extends Component {
 				// if it is, update the value of the shelf
 				books.forEach((book) => {
 
+					let bookFound = false;
+
 					this.props.books.forEach((libraryBook) => {
 						if ( libraryBook.id === book.id ) {
+							bookFound = true;
 							book.shelf = libraryBook.shelf;
 						}
 					});
+
+					// if the book is not on the library, consider it none
+					if (!bookFound) { book.shelf = "none"; }
 
 				});
 
@@ -38,13 +44,8 @@ class BookSearch extends Component {
 
 	moveBookSearch = (book, shelfId) => {
 
-		// remove the book from the search results if going to any shelf
-		if ( shelfId !== "none" ) {
-
-			// call the default moveBook function
-			this.props.moveBook(book, shelfId);
-		
-		}
+		// call the default moveBook function
+		this.props.moveBook(book, shelfId);
 
 	}
 
